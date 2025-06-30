@@ -1,12 +1,16 @@
+import { PageContainer } from "@/components/ui/page-container"
+import { Section } from "@/components/ui/section"
+import { SectionContact } from "@/components/section-contact"
+
 export default function TermsPage() {
     return (
-      <div className="min-h-screen bg-white">
-        <div className="container mx-auto px-4 py-12 max-w-4xl">
+      <PageContainer>
+        <Section layout="center" container="md" border="none" pattern="dots" padding="xl">
           {/* Header */}
           <div className="text-center mb-12">
-            <h1 className="font-heading text-4xl md:text-6xl font-bold mb-4">TERMS OF SERVICE</h1>
-            <p className="text-lg font-bold text-gray-600">The boring legal stuff, but in plain English.</p>
-            <div className="w-24 h-1 bg-neon-green mx-auto mt-4"></div>
+            <h1 className="neo-heading">TERMS OF SERVICE</h1>
+            <p className="neo-subtitle">The boring legal stuff, but in plain English.</p>
+            <div className="w-24 h-1 bg-black mx-auto mt-4" />
           </div>
   
           {/* Content */}
@@ -52,7 +56,7 @@ export default function TermsPage() {
             </section>
   
             {/* Your Data */}
-            <section className="neo-brutal bg-white p-8">
+            <section className="neo-brutal bg-neon-teal p-8">
               <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-black pb-2">YOUR DATA</h2>
               <p className="text-lg font-bold mb-4">
                 Your job application data belongs to you. We just store it and help you organize it.
@@ -61,7 +65,7 @@ export default function TermsPage() {
             </section>
   
             {/* Our Stuff */}
-            <section className="neo-brutal bg-white p-8">
+            <section className="neo-brutal bg-neon-green p-8">
               <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-black pb-2">OUR STUFF</h2>
               <p className="text-lg font-bold mb-4">
                 JobRaptor, the code, the design, the name - that's all ours. We built it at 2 AM fueled by coffee and
@@ -71,8 +75,8 @@ export default function TermsPage() {
             </section>
   
             {/* Service Availability */}
-            <section className="neo-brutal bg-neon-pink text-white p-8">
-              <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-white pb-2">SERVICE AVAILABILITY</h2>
+            <section className="neo-brutal bg-neon-pink text-black p-8">
+              <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-black pb-2">SERVICE AVAILABILITY</h2>
               <p className="text-lg font-bold mb-4">
                 We try to keep JobRaptor running 24/7, but sometimes stuff breaks. We're a small team doing our best.
               </p>
@@ -80,7 +84,7 @@ export default function TermsPage() {
             </section>
   
             {/* Liability */}
-            <section className="neo-brutal bg-white p-8">
+            <section className="neo-brutal bg-neon-purple text-black p-8">
               <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-black pb-2">LIABILITY</h2>
               <p className="text-lg font-bold mb-4">
                 JobRaptor is a tool to help you organize your job hunt. We can't guarantee you'll get hired (that's on
@@ -92,8 +96,8 @@ export default function TermsPage() {
             </section>
   
             {/* Changes */}
-            <section className="neo-brutal bg-neon-blue text-white p-8">
-              <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-white pb-2">
+            <section className="neo-brutal bg-neon-blue text-black p-8">
+              <h2 className="font-heading text-2xl font-bold mb-4 border-b-2 border-black pb-2">
                 CHANGES TO THESE TERMS
               </h2>
               <p className="text-lg font-bold mb-4">
@@ -101,21 +105,10 @@ export default function TermsPage() {
               </p>
               <p className="text-lg font-bold">Keep using the app = you're cool with the new terms.</p>
             </section>
-  
-            {/* Contact */}
-            <section className="neo-brutal bg-white p-8 text-center">
-              <h2 className="font-heading text-2xl font-bold mb-4">QUESTIONS?</h2>
-              <p className="text-lg font-bold mb-4">Hit up the human who built this:</p>
-              <a
-                href="mailto:legal@jobraptor.com"
-                className="inline-block bg-neon-yellow px-6 py-3 font-heading font-bold text-black hover:bg-black hover:text-white transition-all duration-200 neo-brutal-sm"
-              >
-                LEGAL@JOBRAPTOR.COM
-              </a>
-            </section>
           </div>
-        </div>
-      </div>
+        </Section>
+        <SectionContact />
+      </PageContainer>
     )
   }
   

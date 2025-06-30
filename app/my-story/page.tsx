@@ -1,13 +1,13 @@
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ArrowRight, Target, Zap, Shield, Users } from "lucide-react"
+import { Target, Zap, Shield, Users } from "lucide-react"
 import { ButtonsCTA } from "@/components/buttons-cta"
+import { Section } from "@/components/ui/section"
+import { PageContainer } from "@/components/ui/page-container"
 
 export default function AboutPage() {
   return (
-    <div className="min-h-screen bg-white">
+    <PageContainer>
       {/* Hero Section */}
-      <section className="bg-neon-green border-b-4 border-black ">
+      <Section id="my-story-hero" layout="center" border="bottom" background="neon-green" padding="xl">
         <div className="container mx-auto px-4 py-16">
           <div className="max-w-4xl mx-auto text-center">
             <div className="neo-brutal bg-black text-white p-4 inline-block mb-8">
@@ -24,10 +24,10 @@ export default function AboutPage() {
             </p>
           </div>
         </div>
-      </section>
+      </Section>
 
       {/* Story Section */}
-      <section className="py-16 bg-dots">
+      <Section id="my-story-story" layout="center" pattern="dots" background="neon-blue" padding="xl">
         <div className="container mx-auto px-4 ">
           <div className="max-w-4xl mx-auto">
             <section className="neo-brutal bg-neon-blue p-8 mb-12">
@@ -112,21 +112,14 @@ export default function AboutPage() {
               </div>
             </section>
 
-            {/* CTA Section */}
-            <section className="text-center">
-              <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">READY TO DOMINATE YOUR JOB SEARCH?</h2>
-              <p className="text-xl font-bold mb-8 max-w-2xl mx-auto">
-                Stop letting the job market push you around. Take control with JobRaptor and turn your job search into a
-                systematic hunt for success.
-              </p>
-              <ButtonsCTA />
-            </section>
+
           </div>
         </div>
-      </section>
+      </Section>
+
 
       {/* Footer Quote */}
-      <section className="bg-neon-yellow border-t-4 border-black py-12">
+      <Section id="my-story-footer" layout="center" border="top" background="neon-yellow" padding="xl">
         <div className="container mx-auto px-4 text-center">
           <blockquote className="max-w-3xl mx-auto">
             <p className="text-2xl md:text-3xl font-heading font-bold mb-4">
@@ -135,7 +128,17 @@ export default function AboutPage() {
             <footer className="text-lg font-bold">— The Frustrated Developer Who Built This Thing</footer>
           </blockquote>
         </div>
-      </section>
-    </div>
+      </Section>
+      {/* CTA Section */}
+      <Section id="my-story-cta" layout="center" border="top" pattern="dots" padding="xl">
+        <h2 className="font-heading text-3xl md:text-4xl font-bold mb-6">READY TO DOMINATE YOUR JOB SEARCH?</h2>
+        <p className="text-xl font-bold mb-8 max-w-2xl mx-auto">
+          Stop letting the job market push you around. Take control with JobRaptor and turn your job search into a
+          systematic hunt for success.
+        </p>
+        <ButtonsCTA />
+      </Section>
+    </PageContainer>
+
   )
 }

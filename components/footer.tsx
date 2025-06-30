@@ -93,11 +93,6 @@ export function Footer() {
                                 </Link>
                             </li>
                             <li>
-                                <Link href="https://twitter.com/jobraptor" className="hover:underline decoration-4 underline-offset-4">
-                                    Twitter Rants
-                                </Link>
-                            </li>
-                            <li>
                                 <Link href="https://github.com/jobraptor" className="hover:underline decoration-4 underline-offset-4">
                                     GitHub Repo
                                 </Link>

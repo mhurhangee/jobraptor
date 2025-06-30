@@ -22,3 +22,12 @@
   .bg-neon-orange {
     @apply bg-orange-300;
   }
+
+  .bg-neon-red {
+    @apply bg-red-300;
+  }
+
+  .bg-neon-teal {
+    @apply bg-teal-300;
+  }
+    

@@ -3,10 +3,11 @@
 
 
 @import './buttons.css';
-@import './colours.css';
+@import './colors.css';
 @import './neo-brutal.css';
-@import './background.css';
+@import './bg-patterns.css';
 @import './input.css';
+@import './typography.css';
 
 @custom-variant dark (&:is(.dark *));
 

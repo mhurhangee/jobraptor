@@ -5,28 +5,32 @@ import { Label } from "@/components/ui/label"
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Mail, MessageSquare, Coffee, Zap } from "lucide-react"
 import Link from "next/link"
+import { Section } from "@/components/ui/section"
+import { appConfig } from "@/lib/config/app"
+import { PageContainer } from "@/components/ui/page-container"
 
 export default function ContactPage() {
     return (
-        <div className="min-h-screen bg-white">
+        <PageContainer>
             {/* Hero Section */}
-            <section className="bg-neon-blue border-b-4 border-black py-16">
+            <Section layout="center" container="md" border="bottom" background="neon-blue" padding="xl">
                 <div className="container mx-auto px-4 text-center">
                     <div className="flex items-center justify-center gap-4 mb-6">
-                        <div className="neo-brutal-sm bg-black p-3">
-                            <Mail className="h-8 w-8 text-orange-300" />
+                        <div className="neo-brutal-sm bg-yellow-300 p-3">
+                            <Mail className="h-8 w-8 text-black" />
                         </div>
-                        <h1 className="font-heading text-5xl md:text-7xl font-black text-black">CONTACT</h1>
+                        <h1 className="neo-heading mt-4">CONTACT</h1>
                     </div>
-                    <p className="font-body text-xl md:text-2xl font-bold text-black max-w-3xl mx-auto">
-                        Got questions? Complaints? Ideas? Just want to vent about the job market?
+                    <p className="neo-subtitle">
+                        Got questions? Complaints? Ideas? <br /> Just want to vent about the job market?
                         <br />
-                        <span className="text-lg">Hit me up - I actually read these!</span>
-                    </p>
-                </div>
-            </section>
 
-            <div className="container mx-auto px-4 py-16">
+                    </p>
+                    <p className="text-lg font-bold mt-6">Hit me up - I actually read these!</p>
+                </div>
+            </Section>
+
+            <Section layout="center" container="lg" pattern="hatch" background="white" padding="xl">
                 <div className="grid lg:grid-cols-2 gap-12 max-w-6xl mx-auto">
                     {/* Contact Form */}
                     <Card className="neo-brutal bg-white">
@@ -181,17 +185,17 @@ export default function ContactPage() {
                             Just shoot me an email directly. I promise I read every single one.
                         </p>
                         <div className="flex flex-col sm:flex-row gap-4 justify-center">
-                            <a href="mailto:hello@jobraptor.dev" className="btn-neo-secondary">
+                            <a href={`mailto:${appConfig.author}`} className="btn-neo-secondary">
                                 <Mail className="h-5 w-5 mr-2" />
                                 EMAIL ME DIRECTLY
                             </a>
-                            <Link href="/about" className="btn-neo-accent">
+                            <Link href="/my-story" className="btn-neo-accent">
                                 READ MY STORY
                             </Link>
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </Section>
+        </PageContainer>
     )
 }

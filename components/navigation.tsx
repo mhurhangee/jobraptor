@@ -32,15 +32,17 @@ const navigationItems = [
         children: [
             { title: "My Story", href: "/my-story" },
             { title: "Contact", href: "/contact" },
+            { title: "Blog", href: "/knowledge/blog" },
         ],
     },
     {
-        title: "Docs",
+        title: "Knowledge",
         children: [
-            { title: "Knowledge Base", href: "/docs/knowledge-base" },
-            { title: "Guides", href: "/docs/guides" },
-            { title: "Templates", href: "/docs/templates" },
-            { title: "Blog", href: "/docs/blog" },
+            { title: "Knowledge Hub", href: "/knowledge/hub" },
+            { title: "Guides", href: "/knowledge/guides" },
+            { title: "Templates", href: "/knowledge/templates" },
+            { title: "Resources", href: "/knowledge/resources" },
+            { title: "Community", href: "/knowledge/community" },
         ],
     },
 ]
@@ -170,7 +172,7 @@ export function Navigation() {
                                         <h3 className="font-heading font-extrabold text-sm text-black uppercase tracking-wide">{item.title}</h3>
                                         <div className="grid gap-1">
                                             {item.children?.map((child) => (
-                                                <Button key={child.title} variant="ghost" asChild className="justify-start h-8 px-2 text-sm">
+                                                <Button key={child.title} variant="link" asChild className="justify-start h-8 px-2 text-sm">
                                                     <Link href={child.href}>{child.title}</Link>
                                                 </Button>
                                             ))}
