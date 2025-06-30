@@ -4,38 +4,15 @@ import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Card, CardContent } from '@/components/ui/card'
 
+import { Navigation } from '@/components/navigation'
+
 import { ArrowRight, Shield, Star, Target, TrendingUp, Users, Zap } from 'lucide-react'
 
 export default function LandingPage() {
   return (
     <div className="font-body min-h-screen bg-white bg-dots">
       {/* Header */}
-      <header className="bg-neon-yellow border-b-4 border-black">
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
-              <div className="neo-brutal-sm bg-white text-black text-2xl">
-                🦖
-              </div>
-              <h1 className="font-heading text-2xl font-extrabold">JOBRAPTOR</h1>
-            </div>
-            <nav className="hidden items-center space-x-8 md:flex">
-              <Link href="#features" className="font-bold hover:underline">
-                FEATURES
-              </Link>
-              <Link href="#pricing" className="font-bold hover:underline">
-                PRICING
-              </Link>
-              <Link href="#testimonials" className="font-bold hover:underline">
-                REVIEWS
-              </Link>
-              <Button asChild className="btn-neo-secondary">
-                <Link href="/dashboard">LAUNCH APP</Link>
-              </Button>
-            </nav>
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Hero Section */}
       <section className="from-neon-yellow via-neon-pink to-neon-blue bg-gradient-to-br py-20">

@@ -1,0 +1,27 @@
+/* Navigation Styles */
+.nav-link {
+    @apply flex items-center font-heading font-bold text-black px-4 py-2 transition-all duration-200 relative;
+    @apply hover:text-black;
+    position: relative;
+  }
+  
+  .nav-link::after {
+    content: "";
+    position: absolute;
+    bottom: -2px;
+    left: 50%;
+    width: 0;
+    height: 4px;
+    background-color: #000;
+    transition: all 0.3s ease;
+    transform: translateX(-50%);
+  }
+  
+  .nav-link:hover::after {
+    width: 100%;
+  }
+  
+  .nav-link-active::after {
+    width: 100%;
+    background-color: #000;
+  }
