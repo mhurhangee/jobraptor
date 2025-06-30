@@ -10,14 +10,13 @@ import { getMdxBySlug } from '@/lib/mdx'
 import { Calendar, PenTool, Tag, User } from 'lucide-react'
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
-  const resolvedParams = await Promise.resolve(params)
-  const { slug } = resolvedParams
+  const { slug } = await params
   const blogPost = await getMdxBySlug('content/blog', slug)
 
   if (!blogPost) {

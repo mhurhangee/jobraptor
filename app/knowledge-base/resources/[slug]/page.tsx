@@ -11,15 +11,13 @@ import { getAllMdxContent, getMdxBySlug } from '@/lib/mdx'
 import { ExternalLink, FileBox } from 'lucide-react'
 
 interface ResourcePageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function ResourcePage({ params }: ResourcePageProps) {
-  // Properly handle params by awaiting them
-  const resolvedParams = await Promise.resolve(params)
-  const { slug } = resolvedParams
+  const { slug } = await params
   const resource = await getMdxBySlug('content/resources', slug)
 
   if (!resource) {

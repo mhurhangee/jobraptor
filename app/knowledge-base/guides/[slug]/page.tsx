@@ -10,15 +10,13 @@ import { getMdxBySlug } from '@/lib/mdx'
 import { Calendar, Map, User } from 'lucide-react'
 
 interface GuidePageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function GuideItemPage({ params }: GuidePageProps) {
-  // Properly handle params by awaiting them
-  const resolvedParams = await Promise.resolve(params)
-  const { slug } = resolvedParams
+  const { slug } = await params
   const guideItem = await getMdxBySlug('content/guides', slug)
 
   if (!guideItem) {

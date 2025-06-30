@@ -9,15 +9,13 @@ import { getMdxBySlug } from '@/lib/mdx'
 import { Calendar, FileQuestion } from 'lucide-react'
 
 interface FaqPageProps {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
 export default async function FaqItemPage({ params }: FaqPageProps) {
-  // Properly handle params by awaiting them
-  const resolvedParams = await Promise.resolve(params)
-  const { slug } = resolvedParams
+  const { slug } = await params
   const faqItem = await getMdxBySlug('content/faq', slug)
 
   if (!faqItem) {
