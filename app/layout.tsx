@@ -9,6 +9,9 @@ import { fontBody, fontHeading } from '@/lib/config/fonts'
 
 import '@/styles/globals.css'
 
+import { Navigation } from '@/components/navigation'
+import { Footer } from '@/components/footer'
+
 export const metadata: Metadata = {
   title: process.env.NODE_ENV === 'development' ? ` (dev) ${appConfig.appName}` : appConfig.appName,
   description: appConfig.appDescription,
@@ -30,7 +33,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={`${fontBody.variable} ${fontHeading.variable} font-body antialiased`}>
+        <Navigation />
         {children}
+        <Footer />
         <Toaster
           position="top-right"
           toastOptions={{

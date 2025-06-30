@@ -12,9 +12,17 @@
   }
   
   .neo-brutal-hover {
-    @apply transition-all duration-200 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_#000];
+    @apply transition-all duration-200 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_];
   }
   
   .neo-brutal-active {
     @apply translate-x-2 translate-y-2 shadow-[2px_2px_0px_0px_#000];
+  }
+
+  .neo-brutal-color {
+    @apply border-2 border-black shadow-[4px_4px_0px_0px_#fde047];
+  }
+
+  .neo-brutal-logo {
+    @apply border-2 bg-black rotate-4 border-black shadow-[4px_4px_0px_0px_#fde047];
   }

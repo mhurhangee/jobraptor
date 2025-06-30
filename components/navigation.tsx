@@ -20,7 +20,7 @@ import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/component
 const navigationItems = [
     {
         title: "Features",
-        href: "#features",
+        href: "/#features",
     },
 
     {
@@ -29,11 +29,13 @@ const navigationItems = [
     },
     {
         title: "About",
-        href: "/about",
+        children: [
+            { title: "My Story", href: "/my-story" },
+            { title: "Contact", href: "/contact" },
+        ],
     },
     {
         title: "Docs",
-        href: "/docs/",
         children: [
             { title: "Knowledge Base", href: "/docs/knowledge-base" },
             { title: "Guides", href: "/docs/guides" },

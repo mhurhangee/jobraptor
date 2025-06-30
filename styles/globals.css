@@ -6,6 +6,7 @@
 @import './colours.css';
 @import './neo-brutal.css';
 @import './background.css';
+@import './input.css';
 
 @custom-variant dark (&:is(.dark *));
 
