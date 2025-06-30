@@ -2,7 +2,6 @@
 @import 'tw-animate-css';
 @plugin '@tailwindcss/typography';
 
-
 @import './buttons.css';
 @import './colors.css';
 @import './neo-brutal.css';

@@ -4,13 +4,13 @@ import type { Metadata } from 'next'
 
 import { Toaster } from '@/components/ui/sonner'
 
+import { Footer } from '@/components/footer'
+import { Navigation } from '@/components/navigation'
+
 import { appConfig } from '@/lib/config/app'
 import { fontBody, fontHeading } from '@/lib/config/fonts'
 
 import '@/styles/globals.css'
-
-import { Navigation } from '@/components/navigation'
-import { Footer } from '@/components/footer'
 
 export const metadata: Metadata = {
   title: process.env.NODE_ENV === 'development' ? ` (dev) ${appConfig.appName}` : appConfig.appName,

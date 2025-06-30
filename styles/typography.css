@@ -1,7 +1,7 @@
 .neo-heading {
-    @apply font-heading uppercase text-5xl md:text-7xl font-black text-black mb-4;
+  @apply font-heading mb-4 text-5xl font-black text-black uppercase md:text-7xl;
 }
 
 .neo-subtitle {
-    @apply text-xl lg:text-2xl font-bold text-black mb-4;
+  @apply mb-4 text-xl font-bold text-black lg:text-2xl;
 }

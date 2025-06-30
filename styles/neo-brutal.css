@@ -1,33 +1,32 @@
 /* Neobrutalist styles */
 .neo-brutal {
-    @apply border-4 border-black shadow-[8px_8px_0px_0px_#000];
-  }
-  
-  .neo-brutal-sm {
-    @apply border-2 border-black shadow-[4px_4px_0px_0px_#000];
-  }
-  
-  .neo-brutal-lg {
-    @apply border-4 border-black shadow-[12px_12px_0px_0px_#000];
-  }
-  
-  .neo-brutal-hover {
-    @apply transition-all duration-200 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_];
-  }
-  
-  .neo-brutal-active {
-    @apply translate-x-2 translate-y-2 shadow-[2px_2px_0px_0px_#000];
-  }
+  @apply border-4 border-black shadow-[8px_8px_0px_0px_#000];
+}
 
-  .neo-brutal-color {
-    @apply border-2 border-black shadow-[4px_4px_0px_0px_#fde047];
-  }
+.neo-brutal-sm {
+  @apply border-2 border-black shadow-[4px_4px_0px_0px_#000];
+}
 
-  .neo-brutal-logo {
-    @apply border-2 bg-black rotate-4 border-black shadow-[4px_4px_0px_0px_#fde047];
-  }
+.neo-brutal-lg {
+  @apply border-4 border-black shadow-[12px_12px_0px_0px_#000];
+}
 
-  .neo-brutal-warning {
-    @apply bg-black text-white px-6 py-3 border-black shadow-[8px_8px_0px_0px_#ef4444];
-  }
-    
+.neo-brutal-hover {
+  @apply transition-all duration-200 hover:translate-x-1 hover:translate-y-1 hover:shadow-[4px_4px_0px_0px_];
+}
+
+.neo-brutal-active {
+  @apply translate-x-2 translate-y-2 shadow-[2px_2px_0px_0px_#000];
+}
+
+.neo-brutal-color {
+  @apply border-2 border-black shadow-[4px_4px_0px_0px_#fde047];
+}
+
+.neo-brutal-logo {
+  @apply rotate-4 border-2 border-black bg-black shadow-[4px_4px_0px_0px_#fde047];
+}
+
+.neo-brutal-warning {
+  @apply border-black bg-black px-6 py-3 text-white shadow-[8px_8px_0px_0px_#ef4444];
+}

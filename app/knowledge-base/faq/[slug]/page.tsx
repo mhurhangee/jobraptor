@@ -1,8 +1,12 @@
 import { notFound } from 'next/navigation'
-import { getMdxBySlug } from '@/lib/mdx'
-import { FileQuestion, ArrowLeft, Calendar } from 'lucide-react'
-import Link from 'next/link'
+
 import { Section } from '@/components/ui/section'
+
+import { KnowledgeBaseNavButtons } from '@/components/knowledge-base-nav-buttons'
+
+import { getMdxBySlug } from '@/lib/mdx'
+
+import { Calendar, FileQuestion } from 'lucide-react'
 
 interface FaqPageProps {
   params: {
@@ -11,51 +15,62 @@ interface FaqPageProps {
 }
 
 export default async function FaqItemPage({ params }: FaqPageProps) {
-  const { slug } = params
+  // Properly handle params by awaiting them
+  const resolvedParams = await Promise.resolve(params)
+  const { slug } = resolvedParams
   const faqItem = await getMdxBySlug('content/faq', slug)
-  
+
   if (!faqItem) {
     notFound()
   }
-  
+
   return (
     <>
-      {/* Header */}
-      <div className="mb-8">
-        <Link 
-          href="/knowledge-base/faq" 
-          className="inline-flex items-center font-bold mb-6 neo-brutal-sm bg-white px-4 py-2 hover:translate-y-[-2px] transition-transform"
-        >
-          <ArrowLeft className="mr-2 h-4 w-4" />
-          Back to FAQ
-        </Link>
-        
-        <div className="neo-brutal bg-neon-green p-6 mb-8">
-          <div className="flex items-center gap-4 mb-2">
-            <FileQuestion className="h-6 w-6" />
-            <h1 className="font-heading text-3xl font-bold">{faqItem.frontmatter.title}</h1>
-          </div>
-          
-          {faqItem.frontmatter.date && (
-            <div className="flex items-center text-sm font-bold">
-              <Calendar className="h-4 w-4 mr-2" />
-              {new Date(faqItem.frontmatter.date).toLocaleDateString('en-US', {
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric',
-              })}
-            </div>
-          )}
-        </div>
-      </div>
-      
       {/* Content */}
-      <Section layout="center" container="md" pattern="dots" padding="lg">
-        <article className="neo-brutal bg-white p-8">
-          <div className="prose prose-lg max-w-none prose-headings:font-heading prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:font-bold prose-p:text-gray-700 prose-a:text-black prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-img:neo-brutal-sm">
+      <Section layout="center" container="md" border="bottom" pattern="dots" padding="sm">
+        <KnowledgeBaseNavButtons
+          previous={faqItem.frontmatter.previous}
+          home="/knowledge-base/faq"
+          next={faqItem.frontmatter.next}
+          color="green"
+        />
+
+        <article className="neo-brutal mb-6 bg-white p-8 text-left">
+          <div className="neo-brutal bg-neon-green mb-8 p-6">
+            <div className="mb-2 flex items-center gap-4">
+              <FileQuestion className="h-6 w-6" />
+              <h1 className="font-heading text-3xl font-bold">{faqItem.frontmatter.title}</h1>
+            </div>
+
+            {faqItem.frontmatter.date && (
+              <div className="flex items-center text-sm font-bold">
+                <Calendar className="mr-2 h-4 w-4" />
+                {new Date(faqItem.frontmatter.date).toLocaleDateString('en-US', {
+                  year: 'numeric',
+                  month: 'long',
+                  day: 'numeric',
+                })}
+              </div>
+            )}
+          </div>
+
+          {faqItem.frontmatter.description && (
+            <p className="neo-brutal-sm mx-auto mb-6 max-w-xl bg-green-300 text-center text-xl font-bold">
+              {faqItem.frontmatter.description}
+            </p>
+          )}
+
+          <div className="prose prose-lg prose-headings:font-heading prose-headings:font-bold prose-h1:text-4xl prose-h2:text-3xl prose-h3:text-2xl prose-p:font-bold prose-p:text-gray-700 prose-a:text-black prose-a:font-bold prose-a:no-underline hover:prose-a:underline prose-img:neo-brutal-sm text-black">
             {faqItem.content}
           </div>
         </article>
+
+        <KnowledgeBaseNavButtons
+          previous={faqItem.frontmatter.previous}
+          home="/knowledge-base/faq"
+          next={faqItem.frontmatter.next}
+          color="green"
+        />
       </Section>
     </>
   )

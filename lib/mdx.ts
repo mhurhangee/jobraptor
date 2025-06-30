@@ -1,7 +1,8 @@
-import fs from 'fs'
-import path from 'path'
-import matter from 'gray-matter'
 import { compileMDX } from 'next-mdx-remote/rsc'
+
+import fs from 'fs'
+import matter from 'gray-matter'
+import path from 'path'
 import remarkGfm from 'remark-gfm'
 
 // Types for MDX content
@@ -12,6 +13,7 @@ export type Frontmatter = {
   author?: string
   tags?: string[]
   slug: string
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   [key: string]: any
 }
 
@@ -24,12 +26,12 @@ export type MDXContent = {
 // Get all MDX files from a directory
 export async function getMdxFiles(directory: string): Promise<string[]> {
   const fullPath = path.join(process.cwd(), directory)
-  
+
   // Check if directory exists
   if (!fs.existsSync(fullPath)) {
     return []
   }
-  
+
   const filenames = fs.readdirSync(fullPath)
   return filenames.filter(filename => filename.endsWith('.mdx'))
 }
@@ -38,24 +40,24 @@ export async function getMdxFiles(directory: string): Promise<string[]> {
 export async function parseMdx(directory: string, filename: string): Promise<MDXContent> {
   const fullPath = path.join(process.cwd(), directory, filename)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
-  
+
   // Use gray-matter to parse the post metadata section
   const { data, content } = matter(fileContents)
-  
+
   // Use next-mdx-remote to parse MDX content
   const { content: mdxContent } = await compileMDX({
     source: content,
-    options: { 
+    options: {
       parseFrontmatter: true,
       mdxOptions: {
         remarkPlugins: [remarkGfm],
-      }
+      },
     },
   })
-  
+
   // Generate slug from filename (remove .mdx extension)
   const slug = filename.replace(/\.mdx$/, '')
-  
+
   return {
     frontmatter: {
       ...data,
@@ -69,13 +71,13 @@ export async function parseMdx(directory: string, filename: string): Promise<MDX
 // Get all MDX content from a directory
 export async function getAllMdxContent(directory: string): Promise<MDXContent[]> {
   const files = await getMdxFiles(directory)
-  
+
   const content = await Promise.all(
-    files.map(async (filename) => {
+    files.map(async filename => {
       return await parseMdx(directory, filename)
     })
   )
-  
+
   // Sort by date if available
   return content.sort((a, b) => {
     if (a.frontmatter.date && b.frontmatter.date) {
@@ -89,10 +91,10 @@ export async function getAllMdxContent(directory: string): Promise<MDXContent[]>
 export async function getMdxBySlug(directory: string, slug: string): Promise<MDXContent | null> {
   const files = await getMdxFiles(directory)
   const filename = files.find(file => file.replace(/\.mdx$/, '') === slug)
-  
+
   if (!filename) {
     return null
   }
-  
+
   return await parseMdx(directory, filename)
 }

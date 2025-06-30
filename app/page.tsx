@@ -1,35 +1,44 @@
 import { Badge } from '@/components/ui/badge'
 import { Card, CardContent } from '@/components/ui/card'
-import { ButtonsCTA } from '@/components/buttons-cta'
-import { Shield, Star, Target, TrendingUp, Users, Zap } from 'lucide-react'
-import { Section } from '@/components/ui/section'
 import { PageContainer } from '@/components/ui/page-container'
+import { Section } from '@/components/ui/section'
+
+import { ButtonsCTA } from '@/components/buttons-cta'
 import { SectionContact } from '@/components/section-contact'
+
+import { Shield, Star, Target, TrendingUp, Users, Zap } from 'lucide-react'
 
 export default function LandingPage() {
   return (
     <PageContainer>
       {/* Hero Section */}
       <Section id="hero" layout="center" pattern="dots" padding="xl">
-          <Badge className="neo-brutal-color mb-8 bg-black px-4 py-2 text-lg text-white">
-            🦖 HUNT YOUR DREAM JOB
-          </Badge>
-          <h1 className="font-heading mb-6 text-6xl leading-tight font-bold md:text-8xl">
-            STOP LOSING
-            <br />
-            <span className="bg-neon-green neo-brutal inline-block -rotate-2 transform px-4 py-2">
-              TRACK OF JOBS
-            </span>
-          </h1>
-          <p className="mx-auto mb-12 max-w-3xl text-xl font-bold md:text-2xl">
-            JobRaptor is the most BRUTAL job application tracker for ambitious professionals who
-            refuse to settle for mediocrity.
-          </p>
-          <ButtonsCTA />
+        <Badge className="neo-brutal-color mb-8 bg-black px-4 py-2 text-lg text-white">
+          🦖 HUNT YOUR DREAM JOB
+        </Badge>
+        <h1 className="font-heading mb-6 text-6xl leading-tight font-bold md:text-8xl">
+          STOP LOSING
+          <br />
+          <span className="bg-neon-green neo-brutal inline-block -rotate-2 transform px-4 py-2">
+            TRACK OF JOBS
+          </span>
+        </h1>
+        <p className="mx-auto mb-12 max-w-3xl text-xl font-bold md:text-2xl">
+          JobRaptor is the most BRUTAL job application tracker for ambitious professionals who
+          refuse to settle for mediocrity.
+        </p>
+        <ButtonsCTA />
       </Section>
 
       {/* Features Section */}
-      <Section id="features" layout="center" container="lg" border="both" background="neon-green" padding="xl">
+      <Section
+        id="features"
+        layout="center"
+        container="lg"
+        border="both"
+        background="neon-green"
+        padding="xl"
+      >
         <div className="mb-16 text-center">
           <h2 className="font-heading mb-6 text-5xl font-bold md:text-6xl">
             FEATURES THAT
@@ -460,8 +469,6 @@ export default function LandingPage() {
           </div>
         </div>
       </section>*/}
-
-
 
       {/* Final CTA - Split Screen */}
       {/*}

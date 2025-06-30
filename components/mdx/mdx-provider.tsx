@@ -1,19 +1,20 @@
 import { MDXProvider } from '@mdx-js/react'
+
 import React from 'react'
 
 // Custom components for MDX content
 const components = {
   h1: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h1 className="mb-6 mt-8 text-4xl font-bold" {...props} />
+    <h1 className="mt-8 mb-6 text-4xl font-bold" {...props} />
   ),
   h2: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h2 className="mb-4 mt-8 text-3xl font-bold" {...props} />
+    <h2 className="mt-8 mb-4 text-3xl font-bold" {...props} />
   ),
   h3: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h3 className="mb-4 mt-6 text-2xl font-bold" {...props} />
+    <h3 className="mt-6 mb-4 text-2xl font-bold" {...props} />
   ),
   h4: (props: React.HTMLAttributes<HTMLHeadingElement>) => (
-    <h4 className="mb-4 mt-6 text-xl font-semibold" {...props} />
+    <h4 className="mt-6 mb-4 text-xl font-semibold" {...props} />
   ),
   p: (props: React.HTMLAttributes<HTMLParagraphElement>) => (
     <p className="mb-4 leading-relaxed" {...props} />
@@ -24,9 +25,7 @@ const components = {
   ol: (props: React.HTMLAttributes<HTMLOListElement>) => (
     <ol className="mb-4 ml-6 list-decimal" {...props} />
   ),
-  li: (props: React.HTMLAttributes<HTMLLIElement>) => (
-    <li className="mb-1" {...props} />
-  ),
+  li: (props: React.HTMLAttributes<HTMLLIElement>) => <li className="mb-1" {...props} />,
   blockquote: (props: React.HTMLAttributes<HTMLQuoteElement>) => (
     <blockquote className="border-l-4 border-gray-300 pl-4 italic" {...props} />
   ),

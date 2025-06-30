@@ -1,153 +1,203 @@
 /* Button styles */
 .btn-neo {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #fde047;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    border-radius: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo:hover {
-    background-color: #facc15 !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
-  
-  .btn-neo-secondary {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #f9a8d4;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    border-radius: 3rem;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo-secondary:hover {
-    background-color: #f472b6 !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
-  
-  .btn-neo-accent {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #93c5fd;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    border-radius: 2rem;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo-accent:hover {
-    background-color: #60a5fa !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
-  
-  .btn-neo-green {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #86efac;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo-green:hover {
-    background-color: #4ade80 !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
-  
-  .btn-neo-purple {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #c4b5fd;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo-purple:hover {
-    background-color: #a78bfa !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
-  
-  .btn-neo-orange {
-    border: 2px solid #000;
-    box-shadow: 4px 4px 0px 0px #000;
-    font-family: var(--font-archivo-black);
-    color: #000;
-    background-color: #fdba74;
-    padding: 0.75rem 1.5rem;
-    font-size: 1.125rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.025em;
-    transition: all 0.2s;
-    cursor: pointer;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-  }
-  
-  .btn-neo-orange:hover {
-    background-color: #fb923c !important;
-    transform: translate(2px, 2px) !important;
-    box-shadow: 2px 2px 0px 0px #000 !important;
-  }
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #fde047;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo:hover {
+  background-color: #facc15 !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-secondary {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #f9a8d4;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-secondary:hover {
+  background-color: #f472b6 !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-accent {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #93c5fd;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  border-radius: 2rem;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-accent:hover {
+  background-color: #60a5fa !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-green {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #86efac;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-green:hover {
+  background-color: #4ade80 !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-purple {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #c4b5fd;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-purple:hover {
+  background-color: #a78bfa !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-orange {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #fdba74;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-orange:hover {
+  background-color: #fb923c !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-pink {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #f9a8d4;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-pink:hover {
+  background-color: #f472b6 !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
+
+.btn-neo-blue {
+  border: 2px solid #000;
+  box-shadow: 4px 4px 0px 0px #000;
+  font-family: var(--font-archivo-black);
+  color: #000;
+  background-color: #93c5fd;
+  padding: 0.75rem 1.5rem;
+  font-size: 1.125rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.025em;
+  transition: all 0.2s;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.btn-neo-blue:hover {
+  background-color: #60a5fa !important;
+  transform: translate(2px, 2px) !important;
+  box-shadow: 2px 2px 0px 0px #000 !important;
+}
