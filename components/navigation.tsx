@@ -32,17 +32,16 @@ const navigationItems = [
         children: [
             { title: "My Story", href: "/my-story" },
             { title: "Contact", href: "/contact" },
-            { title: "Blog", href: "/knowledge/blog" },
         ],
     },
     {
         title: "Knowledge",
         children: [
-            { title: "Knowledge Hub", href: "/knowledge/hub" },
-            { title: "Guides", href: "/knowledge/guides" },
-            { title: "Templates", href: "/knowledge/templates" },
-            { title: "Resources", href: "/knowledge/resources" },
-            { title: "Community", href: "/knowledge/community" },
+            { title: "Knowledge Base", href: "/knowledge-base" },
+            { title: "Blog", href: "/knowledge-base/blog" },
+            { title: "FAQ", href: "/knowledge-base/faq" },
+            { title: "Guides", href: "/knowledge-base/guides" },
+            { title: "Resources", href: "/knowledge-base/resources" },
         ],
     },
 ]
