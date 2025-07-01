@@ -3,10 +3,16 @@
 import { db } from "@/lib/db"
 import { companies } from "@/lib/db/schema"
 import { revalidatePath } from "next/cache"
+import { eq } from "drizzle-orm"
+import { auth } from "@clerk/nextjs/server"
 
 export async function getCompanies() {
   try {
-    return await db.select().from(companies).orderBy(companies.name)
+    const { userId } = await auth()
+    if (!userId) {
+      throw new Error("Unauthorized")
+    }
+    return await db.select().from(companies).orderBy(companies.name).where(eq(companies.userId, userId))
   } catch (error) {
     console.error("Error fetching companies:", error)
     return []
@@ -15,6 +21,11 @@ export async function getCompanies() {
 
 export async function createCompany(formData: FormData) {
   try {
+    const { userId } = await auth()
+    if (!userId) {
+      throw new Error("Unauthorized")
+    }
+    
     const name = formData.get("name") as string
     const website = formData.get("website") as string
     const industry = formData.get("industry") as string
@@ -35,6 +46,7 @@ export async function createCompany(formData: FormData) {
         size: size || null,
         location: location || null,
         description: description || null,
+        userId,
       })
       .returning()
 

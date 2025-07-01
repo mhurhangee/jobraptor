@@ -11,8 +11,10 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog"
 import { createJob } from "@/lib/actions/jobs"
 import { createCompany } from "@/lib/actions/companies"
+import { extractContentFromUrl, extractJobInfo } from "@/lib/actions/extract-job"
 import type { Company } from "@/lib/db/schema"
-import { Plus } from "lucide-react"
+import { Plus, Loader2 } from "lucide-react"
+import { toast } from "sonner"
 
 interface AddJobModalProps {
   companies: Company[]
@@ -23,27 +25,170 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
   const [open, setOpen] = useState(false)
   const [selectedCompanyId, setSelectedCompanyId] = useState("")
   const [showNewCompanyDialog, setShowNewCompanyDialog] = useState(false)
+  const [step, setStep] = useState<"url" | "form">("url")
+  const [isLoading, setIsLoading] = useState(false)
+  const [jobUrl, setJobUrl] = useState("")
+  
+  // Form data state
+  const [formData, setFormData] = useState({
+    title: "",
+    description: "",
+    salary: "",
+    salaryMax: "",
+    location: "",
+    remote: "",
+    url: "",
+    notes: "",
+    priority: "3",
+    aiMetadata: {}
+  })
 
   const handleSubmit = async (formData: FormData) => {
-    await createJob(formData)
-    setOpen(false)
+    try {
+      await createJob(formData)
+      setOpen(false)
+      toast.success("Job added successfully")
+    } catch (error) {
+      toast.error("Failed to add job")
+      console.error(error)
+    }
   }
 
   const handleNewCompany = async (formData: FormData) => {
-    const newCompany = await createCompany(formData)
-    setSelectedCompanyId(newCompany.id)
-    setShowNewCompanyDialog(false)
+    try {
+      const newCompany = await createCompany(formData)
+      setSelectedCompanyId(newCompany.id)
+      setShowNewCompanyDialog(false)
+    } catch (error) {
+      toast.error("Failed to add company")
+      console.error(error)
+    }
+  }
+  
+  const handleUrlSubmit = async (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!jobUrl) {
+      toast.error("Please enter a URL")
+      return
+    }
+    
+    setIsLoading(true)
+    try {
+      // Extract content from URL
+      const contentResult = await extractContentFromUrl(jobUrl)
+      
+      // Extract job information from content
+      const jobInfo = await extractJobInfo(contentResult.context, contentResult.url)
+      
+      // Update form data with extracted information
+      setFormData({
+        title: jobInfo.job.title || "",
+        description: jobInfo.job.description || "",
+        salary: jobInfo.job.salary || "",
+        salaryMax: jobInfo.job.salaryMax || "",
+        location: jobInfo.job.location || "",
+        remote: jobInfo.job.remote || "",
+        url: jobUrl,
+        notes: "",
+        priority: "3",
+        aiMetadata: jobInfo.aiMetadata
+      })
+      
+      // Set company if found
+      if (jobInfo.company.id) {
+        setSelectedCompanyId(jobInfo.company.id)
+      }
+      
+      // Move to form step
+      setStep("form")
+      toast.success("Job information extracted successfully")
+    } catch (error) {
+      toast.error("Failed to extract job information")
+      console.error(error)
+    } finally {
+      setIsLoading(false)
+    }
+  }
+  
+  const resetModal = () => {
+    setStep("url")
+    setJobUrl("")
+    setFormData({
+      title: "",
+      description: "",
+      salary: "",
+      salaryMax: "",
+      location: "",
+      remote: "",
+      url: "",
+      notes: "",
+      priority: "3",
+      aiMetadata: {}
+    })
+    setSelectedCompanyId("")
+  }
+  
+  // Reset the modal when it's closed
+  const handleOpenChange = (isOpen: boolean) => {
+    setOpen(isOpen)
+    if (!isOpen) {
+      resetModal()
+    }
   }
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogTrigger asChild>{trigger || <Button className="btn-neo">ADD NEW JOB</Button>}</DialogTrigger>
       <DialogContent className="neo-brutal bg-white max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="bg-neon-yellow p-6 -m-6 mb-6 border-b-4 border-black">
           <DialogTitle className="font-heading text-3xl font-bold">ADD NEW JOB</DialogTitle>
         </DialogHeader>
 
-        <form action={handleSubmit} className="space-y-6 p-2">
+        {step === "url" ? (
+          <div className="space-y-6 p-2">
+            <div className="space-y-4">
+              <div className="text-lg font-bold">Enter job posting URL to auto-extract information</div>
+              <form onSubmit={handleUrlSubmit} className="space-y-4">
+                <div className="space-y-2">
+                  <Label htmlFor="job-url" className="font-heading font-bold">
+                    JOB POSTING URL
+                  </Label>
+                  <Input
+                    id="job-url"
+                    value={jobUrl}
+                    onChange={(e) => setJobUrl(e.target.value)}
+                    type="url"
+                    placeholder="https://company.com/careers/job-id"
+                    className="neo-input"
+                    required
+                    disabled={isLoading}
+                  />
+                </div>
+                <div className="flex gap-4">
+                  <Button type="submit" className="btn-neo flex-1" disabled={isLoading}>
+                    {isLoading ? (
+                      <>
+                        <Loader2 className="mr-2 h-4 w-4 animate-spin" />
+                        EXTRACTING...
+                      </>
+                    ) : (
+                      "EXTRACT JOB INFO"
+                    )}
+                  </Button>
+                  <Button 
+                    type="button" 
+                    className="btn-neo-secondary" 
+                    onClick={() => setStep("form")} 
+                    disabled={isLoading}
+                  >
+                    SKIP TO FORM
+                  </Button>
+                </div>
+              </form>
+            </div>
+          </div>
+        ) : (
+          <form action={handleSubmit} className="space-y-6 p-2">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="space-y-2">
               <Label htmlFor="modal-title" className="font-heading font-bold">
@@ -55,6 +200,7 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
                 required
                 placeholder="e.g. Senior Frontend Engineer"
                 className="neo-input"
+                defaultValue={formData.title}
               />
             </div>
 
@@ -113,14 +259,14 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
               <Label htmlFor="modal-salary" className="font-heading font-bold">
                 SALARY (MIN)
               </Label>
-              <Input id="modal-salary" name="salary" type="number" placeholder="120000" className="neo-input" />
+              <Input id="modal-salary" name="salary" type="number" placeholder="120000" className="neo-input" defaultValue={formData.salary} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="modal-salaryMax" className="font-heading font-bold">
                 SALARY (MAX)
               </Label>
-              <Input id="modal-salaryMax" name="salaryMax" type="number" placeholder="150000" className="neo-input" />
+              <Input id="modal-salaryMax" name="salaryMax" type="number" placeholder="150000" className="neo-input" defaultValue={formData.salaryMax} />
             </div>
 
             <div className="space-y-2">
@@ -157,14 +303,14 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
               <Label htmlFor="modal-location" className="font-heading font-bold">
                 LOCATION
               </Label>
-              <Input id="modal-location" name="location" placeholder="San Francisco, CA" className="neo-input" />
+              <Input id="modal-location" name="location" placeholder="San Francisco, CA" className="neo-input" defaultValue={formData.location} />
             </div>
 
             <div className="space-y-2">
               <Label htmlFor="modal-remote" className="font-heading font-bold">
                 WORK TYPE
               </Label>
-              <Select name="remote">
+              <Select name="remote" defaultValue={formData.remote || undefined}>
                 <SelectTrigger className="neo-select">
                   <SelectValue placeholder="Select work type" />
                 </SelectTrigger>
@@ -193,6 +339,7 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
               type="url"
               placeholder="https://company.com/careers/job-id"
               className="neo-input"
+              defaultValue={formData.url}
             />
           </div>
 
@@ -206,18 +353,45 @@ export function AddJobModal({ companies, trigger }: AddJobModalProps) {
               placeholder="Any additional notes..."
               rows={3}
               className="neo-textarea"
+              defaultValue={formData.notes}
             />
           </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="modal-description" className="font-heading font-bold">
+              DESCRIPTION
+            </Label>
+            <Textarea
+              id="modal-description"
+              name="description"
+              placeholder="Job description..."
+              rows={5}
+              className="neo-textarea"
+              defaultValue={formData.description}
+            />
+          </div>
+
+          {/* Hidden field for AI metadata */}
+          <input 
+            type="hidden" 
+            name="aiMetadata" 
+            value={JSON.stringify(formData.aiMetadata)} 
+          />
 
           <div className="flex gap-4 pt-4">
             <Button type="submit" className="btn-neo flex-1">
               ADD JOB
             </Button>
-            <Button type="button" className="btn-neo-secondary px-6" onClick={() => setOpen(false)}>
-              CANCEL
+            <Button 
+              type="button" 
+              className="btn-neo-secondary px-6" 
+              onClick={() => step === "form" ? setStep("url") : setOpen(false)}
+            >
+              {step === "form" ? "BACK" : "CANCEL"}
             </Button>
           </div>
         </form>
+        )}
       </DialogContent>
     </Dialog>
   )

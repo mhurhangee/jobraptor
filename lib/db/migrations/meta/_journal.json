@@ -8,6 +8,20 @@
       "when": 1751366170509,
       "tag": "0000_lovely_wonder_man",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1751372788127,
+      "tag": "0001_complete_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751373589352,
+      "tag": "0002_stale_justice",
+      "breakpoints": true
     }
   ]
 }

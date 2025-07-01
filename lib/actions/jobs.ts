@@ -196,9 +196,20 @@ export async function createJob(formData: FormData) {
     const priority = formData.get("priority") as string
     const url = formData.get("url") as string
     const notes = formData.get("notes") as string
+    const aiMetadataStr = formData.get("aiMetadata") as string
 
     if (!title || !companyId) {
       throw new Error("Title and company are required")
+    }
+    
+    // Parse AI metadata if available
+    let aiMetadata = null
+    if (aiMetadataStr) {
+      try {
+        aiMetadata = JSON.parse(aiMetadataStr)
+      } catch (error) {
+        console.error("Error parsing AI metadata:", error)
+      }
     }
 
     await db.insert(jobs).values({
@@ -214,6 +225,7 @@ export async function createJob(formData: FormData) {
       priority: priority ? Number.parseInt(priority) : 3,
       url: url || null,
       notes: notes || null,
+      aiMetadata,
     })
 
     revalidatePath("/jobs")
