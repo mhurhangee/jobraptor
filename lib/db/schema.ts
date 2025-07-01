@@ -49,5 +49,5 @@ export const jobsRelations = relations(jobs, ({ one }) => ({
 
 export type Company = typeof companies.$inferSelect
 export type NewCompany = typeof companies.$inferInsert
-export type Job = typeof jobs.$inferSelect & { company: Company }
+export type Job = typeof jobs.$inferSelect & { company: Company | null}
 export type NewJob = typeof jobs.$inferInsert

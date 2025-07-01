@@ -96,9 +96,8 @@ export function Navigation() {
 
             <SignedIn>
               <Button asChild className="btn-neo-secondary hidden lg:block" size="sm">
-                <Link href="/job/add">
-                  <Plus strokeWidth={3} className="hidden h-4 w-4 lg:block" />
-                  Job
+                <Link href="/jobs">
+                  Your Jobs
                 </Link>
               </Button>
               <UserButton appearance={{ baseTheme: neobrutalism }} fallback={<UserIcon />} />
