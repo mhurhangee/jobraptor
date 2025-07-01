@@ -1,3 +1,6 @@
+import { ClerkProvider } from '@clerk/nextjs'
+import { neobrutalism } from '@clerk/themes'
+
 import type React from 'react'
 
 import type { Metadata } from 'next'
@@ -31,23 +34,25 @@ export const metadata: Metadata = {
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en">
-      <body className={`${fontBody.variable} ${fontHeading.variable} font-body antialiased`}>
-        <Navigation />
-        {children}
-        <Footer />
-        <Toaster
-          position="top-right"
-          toastOptions={{
-            style: {
-              border: '2px solid #000',
-              boxShadow: '4px 4px 0px 0px #000',
-              fontWeight: 'bold',
-              fontFamily: 'var(--font-body)',
-            },
-          }}
-        />
-      </body>
-    </html>
+    <ClerkProvider appearance={{ baseTheme: neobrutalism }}>
+      <html lang="en">
+        <body className={`${fontBody.variable} ${fontHeading.variable} font-body antialiased`}>
+          <Navigation />
+          {children}
+          <Footer />
+          <Toaster
+            position="top-right"
+            toastOptions={{
+              style: {
+                border: '2px solid #000',
+                boxShadow: '4px 4px 0px 0px #000',
+                fontWeight: 'bold',
+                fontFamily: 'var(--font-body)',
+              },
+            }}
+          />
+        </body>
+      </html>
+    </ClerkProvider>
   )
 }

@@ -111,7 +111,7 @@ export function Navigation() {
 
           <div className="flex items-center space-x-4">
             <Button asChild className="btn-neo-secondary hidden lg:block">
-              <Link href="/dashboard">
+              <Link href="/sign-in">
                 GO <ArrowRight strokeWidth={3} className="h-4 w-4" />
               </Link>
             </Button>
