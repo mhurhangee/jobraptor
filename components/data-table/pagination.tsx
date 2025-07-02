@@ -1,10 +1,22 @@
-"use client"
+'use client'
 
-import { ChevronLeftIcon, ChevronRightIcon, ChevronsLeftIcon, ChevronsRightIcon } from "lucide-react"
-import type { Table } from "@tanstack/react-table"
+import type { Table } from '@tanstack/react-table'
 
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Button } from '@/components/ui/button'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
+
+import {
+  ChevronLeftIcon,
+  ChevronRightIcon,
+  ChevronsLeftIcon,
+  ChevronsRightIcon,
+} from 'lucide-react'
 
 interface DataTablePaginationProps<TData> {
   table: Table<TData>
@@ -12,16 +24,17 @@ interface DataTablePaginationProps<TData> {
 
 export function DataTablePagination<TData>({ table }: DataTablePaginationProps<TData>) {
   return (
-    <div className="flex items-center justify-between px-2 py-4 border-t-2 border-black bg-gray-50">
+    <div className="flex items-center justify-between border-t-2 border-black bg-gray-50 px-2 py-4">
       <div className="flex-1 text-sm font-bold text-gray-600">
-        {table.getFilteredSelectedRowModel().rows.length} OF {table.getFilteredRowModel().rows.length} ROW(S) SELECTED
+        {table.getFilteredSelectedRowModel().rows.length} OF{' '}
+        {table.getFilteredRowModel().rows.length} ROW(S) SELECTED
       </div>
       <div className="flex items-center space-x-6 lg:space-x-8">
         <div className="flex items-center space-x-2">
           <p className="text-sm font-bold">ROWS PER PAGE</p>
           <Select
             value={`${table.getState().pagination.pageSize}`}
-            onValueChange={(value) => {
+            onValueChange={value => {
               table.setPageSize(Number(value))
             }}
           >
@@ -29,7 +42,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
               <SelectValue placeholder={table.getState().pagination.pageSize} />
             </SelectTrigger>
             <SelectContent side="top" className="neo-brutal bg-white">
-              {[10, 20, 30, 40, 50].map((pageSize) => (
+              {[10, 20, 30, 40, 50].map(pageSize => (
                 <SelectItem key={pageSize} value={`${pageSize}`} className="font-bold">
                   {pageSize}
                 </SelectItem>
@@ -43,7 +56,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
         <div className="flex items-center space-x-2">
           <Button
             variant="outline"
-            className="neo-toolbar-button hidden h-8 w-8 p-0 lg:flex bg-transparent"
+            className="neo-toolbar-button hidden h-8 w-8 bg-transparent p-0 lg:flex"
             onClick={() => table.setPageIndex(0)}
             disabled={!table.getCanPreviousPage()}
           >
@@ -52,7 +65,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
           </Button>
           <Button
             variant="outline"
-            className="neo-toolbar-button h-8 w-8 p-0 bg-transparent"
+            className="neo-toolbar-button h-8 w-8 bg-transparent p-0"
             onClick={() => table.previousPage()}
             disabled={!table.getCanPreviousPage()}
           >
@@ -61,7 +74,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
           </Button>
           <Button
             variant="outline"
-            className="neo-toolbar-button h-8 w-8 p-0 bg-transparent"
+            className="neo-toolbar-button h-8 w-8 bg-transparent p-0"
             onClick={() => table.nextPage()}
             disabled={!table.getCanNextPage()}
           >
@@ -70,7 +83,7 @@ export function DataTablePagination<TData>({ table }: DataTablePaginationProps<T
           </Button>
           <Button
             variant="outline"
-            className="neo-toolbar-button hidden h-8 w-8 p-0 lg:flex bg-transparent"
+            className="neo-toolbar-button hidden h-8 w-8 bg-transparent p-0 lg:flex"
             onClick={() => table.setPageIndex(table.getPageCount() - 1)}
             disabled={!table.getCanNextPage()}
           >

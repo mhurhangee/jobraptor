@@ -1,214 +1,218 @@
-import { getJob } from "@/lib/actions/jobs"
-import { notFound } from "next/navigation"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
-import { ArrowLeft, ExternalLink, Edit, Trash2 } from "lucide-react"
-import { deleteJob } from "@/lib/actions/jobs"
+'use client'
+
+import { useEffect, useState } from 'react'
+
+import Link from 'next/link'
+import { notFound } from 'next/navigation'
+
+import { Badge } from '@/components/ui/badge'
+import { Button } from '@/components/ui/button'
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+
+import { DeleteJobDialog } from '@/components/delete-job-dialog'
+import { EditableField } from '@/components/editable-field'
+
+import { getJob } from '@/lib/actions/jobs'
+import { DbJob } from '@/lib/db/schema'
+
+import { ArrowLeft, ExternalLink, Trash2 } from 'lucide-react'
 
 interface JobDetailPageProps {
   params: Promise<{ id: string }>
 }
 
-export default async function JobDetailPage({ params }: JobDetailPageProps) {
-  const job = await getJob((await params).id)
+export default function JobDetailPage({ params }: JobDetailPageProps) {
+  const [job, setJob] = useState<DbJob | null>(null)
+  const [isLoading, setIsLoading] = useState(true)
+  const [showDeleteDialog, setShowDeleteDialog] = useState(false)
+
+  useEffect(() => {
+    const fetchJob = async () => {
+      try {
+        const jobData = await getJob((await params).id)
+        if (!jobData) {
+          notFound()
+        }
+        setJob(jobData)
+      } catch (error) {
+        console.error('Error fetching job:', error)
+        notFound()
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    fetchJob()
+  }, [params])
+
+  if (isLoading) {
+    return <div className="p-8 text-center">Loading...</div>
+  }
 
   if (!job) {
     notFound()
   }
 
-  const formatSalary = (salary: string | null, salaryMax: string | null) => {
-    if (!salary) return "Not specified"
-
-    const amount = Number.parseFloat(salary)
-    const formatted = new Intl.NumberFormat("en-US", {
-      style: "currency",
-      currency: "USD",
-      minimumFractionDigits: 0,
-      maximumFractionDigits: 0,
-    }).format(amount)
-
-    if (salaryMax) {
-      const maxAmount = Number.parseFloat(salaryMax)
-      const formattedMax = new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      }).format(maxAmount)
-      return `${formatted} - ${formattedMax}`
-    }
-
-    return formatted
-  }
-
   return (
     <div className="container mx-auto py-10">
-      <div className="max-w-4xl mx-auto">
-        <div className="flex items-center gap-4 mb-6">
+      <div className="mx-auto max-w-4xl">
+        <div className="mb-6 flex items-center gap-4">
           <Button variant="ghost" size="icon" asChild>
             <Link href="/jobs">
               <ArrowLeft className="h-4 w-4" />
             </Link>
           </Button>
-          <div className="flex-1">
-            <h1 className="text-3xl font-bold">{job.title}</h1>
-            <p className="text-xl text-muted-foreground">{job.company?.name}</p>
-          </div>
-          <div className="flex gap-2">
-            <Button variant="outline" asChild>
-              <Link href={`/jobs/${job.id}/edit`}>
-                <Edit className="h-4 w-4 mr-2" />
-                Edit
-              </Link>
-            </Button>
-            <form action={deleteJob.bind(null, job.id)}>
-              <Button variant="destructive" type="submit">
-                <Trash2 className="h-4 w-4 mr-2" />
-                Delete
+          <div className="flex items-center justify-between">
+            <div>
+              <EditableField
+                jobId={job.id}
+                fieldName="title"
+                fieldValue={job.title}
+                className="mb-1 text-3xl font-bold"
+              />
+              <EditableField
+                jobId={job.id}
+                fieldName="company"
+                fieldValue={job.company}
+                className="text-xl"
+              />
+            </div>
+            <div className="flex gap-2">
+              <Button
+                variant="destructive"
+                className="btn-neo-destructive flex items-center gap-1"
+                onClick={() => setShowDeleteDialog(true)}
+              >
+                <Trash2 className="h-4 w-4" />
+                DELETE
               </Button>
-            </form>
+            </div>
           </div>
+          {showDeleteDialog && (
+            <DeleteJobDialog
+              jobId={job.id}
+              jobTitle={job.title}
+              company={job.company}
+              isOpen={showDeleteDialog}
+              onClose={() => setShowDeleteDialog(false)}
+            />
+          )}
         </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Job Details</CardTitle>
+          </CardHeader>
+          <CardContent className="space-y-4">
+            <div className="grid grid-cols-2 gap-4">
+              <div>
+                <h3 className="text-muted-foreground text-sm font-semibold">Status</h3>
+                <Badge>{job.status}</Badge>
+                {/* Status will need a special editor with dropdown */}
+              </div>
+              <div>
+                <EditableField
+                  jobId={job.id}
+                  fieldName="salary"
+                  fieldValue={job.salary}
+                  label="Salary"
+                />
+              </div>
+              <div>
+                <EditableField
+                  jobId={job.id}
+                  fieldName="appliedAt"
+                  fieldValue={job.appliedAt ? new Date(job.appliedAt).toISOString() : null}
+                  fieldType="date"
+                  label="Applied Date"
+                />
+              </div>
+              <div>
+                <EditableField
+                  jobId={job.id}
+                  fieldName="nextAction"
+                  fieldValue={job.nextAction}
+                  label="Next Action"
+                />
+              </div>
+              <div>
+                <EditableField
+                  jobId={job.id}
+                  fieldName="nextActionDeadline"
+                  fieldValue={
+                    job.nextActionDeadline ? new Date(job.nextActionDeadline).toISOString() : null
+                  }
+                  fieldType="date"
+                  label="Next Action Deadline"
+                />
+              </div>
+            </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-          <div className="lg:col-span-2 space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Job Details</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Status</h3>
-                    <Badge
-                      variant={
-                        {
-                          applied: "default",
-                          interviewing: "secondary",
-                          offer: "outline",
-                          rejected: "destructive",
-                          withdrawn: "outline",
-                        }[job.status] as any
-                      }
-                    >
-                      {job.status}
-                    </Badge>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Priority</h3>
-                    <p>{job.priority}/5</p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Salary</h3>
-                    <p>{formatSalary(job.salary, job.salaryMax)}</p>
-                  </div>
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Applied Date</h3>
-                    <p>{job.appliedAt ? new Date(job.appliedAt).toLocaleDateString() : "N/A"}</p>
-                  </div>
-                </div>
+            <div>
+              <EditableField
+                jobId={job.id}
+                fieldName="location"
+                fieldValue={job.location}
+                label="Location"
+              />
+            </div>
 
-                {job.location && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Location</h3>
-                    <p>
-                      {job.location} {job.remote && `(${job.remote})`}
-                    </p>
-                  </div>
-                )}
+            <div>
+              <EditableField
+                jobId={job.id}
+                fieldName="postingUrl"
+                fieldValue={job.postingUrl}
+                label="Job Posting URL"
+              />
+              {job.postingUrl && (
+                <a
+                  href={job.postingUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 flex items-center gap-1 text-blue-600 hover:underline"
+                >
+                  View Original Posting <ExternalLink className="h-3 w-3" />
+                </a>
+              )}
+            </div>
 
-                {job.url && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Job Posting</h3>
-                    <a
-                      href={job.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline flex items-center gap-1"
-                    >
-                      View Original Posting <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
+            <div>
+              <EditableField
+                jobId={job.id}
+                fieldName="contact"
+                fieldValue={job.contact}
+                label="Contact"
+              />
+            </div>
+          </CardContent>
+        </Card>
 
-            {job.description && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Job Description</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="whitespace-pre-wrap text-sm">{job.description}</div>
-                </CardContent>
-              </Card>
-            )}
+        <Card>
+          <CardHeader>
+            <CardTitle>Job Description</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <EditableField
+              jobId={job.id}
+              fieldName="description"
+              fieldValue={job.description}
+              fieldType="textarea"
+            />
+          </CardContent>
+        </Card>
 
-            {job.notes && (
-              <Card>
-                <CardHeader>
-                  <CardTitle>Notes</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <div className="whitespace-pre-wrap text-sm">{job.notes}</div>
-                </CardContent>
-              </Card>
-            )}
-          </div>
-
-          <div className="space-y-6">
-            <Card>
-              <CardHeader>
-                <CardTitle>Company Info</CardTitle>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div>
-                  <h3 className="font-semibold text-sm text-muted-foreground">Name</h3>
-                  <p>{job.company?.name}</p>
-                </div>
-                {job.company?.industry && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Industry</h3>
-                    <p>{job.company.industry}</p>
-                  </div>
-                )}
-                {job.company?.size && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Company Size</h3>
-                    <p>{job.company.size} employees</p>
-                  </div>
-                )}
-                {job.company?.location && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Location</h3>
-                    <p>{job.company.location}</p>
-                  </div>
-                )}
-                {job.company?.website && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">Website</h3>
-                    <a
-                      href={job.company.website}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-blue-600 hover:underline flex items-center gap-1"
-                    >
-                      Visit Website <ExternalLink className="h-3 w-3" />
-                    </a>
-                  </div>
-                )}
-                {job.company?.description && (
-                  <div>
-                    <h3 className="font-semibold text-sm text-muted-foreground">About</h3>
-                    <p className="text-sm">{job.company.description}</p>
-                  </div>
-                )}
-              </CardContent>
-            </Card>
-          </div>
-        </div>
+        <Card>
+          <CardHeader>
+            <CardTitle>Notes</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <EditableField
+              jobId={job.id}
+              fieldName="notes"
+              fieldValue={job.notes}
+              fieldType="textarea"
+            />
+          </CardContent>
+        </Card>
       </div>
     </div>
   )
