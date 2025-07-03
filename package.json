@@ -37,7 +37,6 @@
     "ai": "5.0.0-beta.4",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
-    "date-fns": "^4.1.0",
     "drizzle-orm": "^0.44.2",
     "exa-js": "^1.8.19",
     "gray-matter": "^4.0.3",

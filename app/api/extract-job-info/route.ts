@@ -9,9 +9,6 @@ import { generateObject } from 'ai'
 export async function POST(request: NextRequest) {
   const { diffBotUrlExtractionResult, exaUrlExtractionResult } = await request.json()
 
-  console.log('===== diffBotUrlExtractionResult =====\n\n', diffBotUrlExtractionResult)
-  console.log('===== exaUrlExtractionResult =====\n\n', exaUrlExtractionResult)
-
   const jobInfo = await generateObject({
     model: openai('gpt-4.1-mini'),
     prompt:
