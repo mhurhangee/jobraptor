@@ -8,11 +8,11 @@ import { PageContainer } from '@/components/ui/page-container'
 import { DataTable } from '@/components/data-table'
 import { columns } from '@/components/data-table/columns'
 
-import { getJobs } from '@/lib/actions/jobs'
+import { DbJob } from '@/lib/db/schema'
 
 async function JobsTable() {
   try {
-    const [jobs] = await Promise.all([getJobs()])
+    const jobs = [] as DbJob[]
     return (
       <>
         <div className="mb-8 flex items-center justify-between">

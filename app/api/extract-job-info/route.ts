@@ -6,6 +6,9 @@ import { jobExtractionSchema } from '@/components/add-job-form/schemas'
 
 import { generateObject } from 'ai'
 
+export const runtime = 'edge'
+export const maxDuration = 300
+
 export async function POST(request: NextRequest) {
   const { diffBotUrlExtractionResult, exaUrlExtractionResult } = await request.json()
 

@@ -1,9 +1,10 @@
 import { NextRequest, NextResponse } from 'next/server'
 
+export const runtime = 'edge'
+export const maxDuration = 300
+
 export async function POST(request: NextRequest) {
   const { url } = await request.json()
-
-  console.log('===== url =====\n\n', url)
 
   const token = process.env.DIFFBOT_TOKEN
 

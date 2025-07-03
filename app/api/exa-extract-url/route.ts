@@ -2,6 +2,9 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { Exa } from 'exa-js'
 
+export const runtime = 'edge'
+export const maxDuration = 300
+
 export async function POST(request: NextRequest) {
   const { url } = await request.json()
 
