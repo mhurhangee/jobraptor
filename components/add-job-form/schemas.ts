@@ -45,15 +45,6 @@ export const jobSchema = jobExtractionSchema.extend({
 
 export type JobSchema = z.infer<typeof jobSchema>
 
-export const dbJobSchema = jobSchema.extend({
-  id: z.string().describe('The unique identifier of the job'),
-  userId: z.string().describe('The unique identifier of the user'),
-  createdAt: z.date().describe('The date the job was created'),
-  updatedAt: z.date().describe('The date the job was last updated'),
-})
-
-export type DbJobSchema = z.infer<typeof dbJobSchema>
-
 export interface StepperData {
   job?: JobSchema & { id?: string }
 }
