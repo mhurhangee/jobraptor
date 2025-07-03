@@ -1,9 +1,10 @@
 import { compileMDX } from 'next-mdx-remote/rsc'
-
-import fs from 'fs'
 import matter from 'gray-matter'
-import path from 'path'
 import remarkGfm from 'remark-gfm'
+import path from 'path'
+
+// Import fs only in node environment and during build time
+import { cache } from 'react'
 
 // Types for MDX content
 export type Frontmatter = {
@@ -23,21 +24,61 @@ export type MDXContent = {
   slug: string
 }
 
-// Get all MDX files from a directory
-export async function getMdxFiles(directory: string): Promise<string[]> {
+// Cache for MDX content to avoid redundant processing
+const mdxContentCache = new Map<string, MDXContent>()
+const slugsCache = new Map<string, string[]>()
+
+// Helper to safely use fs only during build time
+const safelyUseFs = () => {
+  // Only import fs dynamically when needed
+  if (process.env.NODE_ENV === 'development' || process.env.NEXT_PHASE === 'phase-production-build') {
+    return require('fs')
+  }
+  return null
+}
+
+// Get all MDX files from a directory - only used during build time
+export const getMdxFiles = cache(async (directory: string): Promise<string[]> => {
+  // Check if we have cached results
+  if (slugsCache.has(directory)) {
+    return slugsCache.get(directory) || []
+  }
+
+  // This should only run during build time
+  const fs = safelyUseFs()
+  if (!fs) return []
+
   const fullPath = path.join(process.cwd(), directory)
 
   // Check if directory exists
   if (!fs.existsSync(fullPath)) {
+    slugsCache.set(directory, [])
     return []
   }
 
   const filenames = fs.readdirSync(fullPath)
-  return filenames.filter(filename => filename.endsWith('.mdx'))
-}
+  const mdxFiles = filenames.filter((filename: string) => filename.endsWith('.mdx'))
+  
+  // Cache the results
+  slugsCache.set(directory, mdxFiles)
+  return mdxFiles
+})
 
-// Parse MDX file content
-export async function parseMdx(directory: string, filename: string): Promise<MDXContent> {
+// Parse MDX file content - only used during build time
+export const parseMdx = cache(async (directory: string, filename: string): Promise<MDXContent> => {
+  const cacheKey = `${directory}/${filename}`
+  
+  // Check if we have cached results
+  if (mdxContentCache.has(cacheKey)) {
+    return mdxContentCache.get(cacheKey)!
+  }
+
+  // This should only run during build time
+  const fs = safelyUseFs()
+  if (!fs) {
+    throw new Error('Cannot access filesystem in production runtime')
+  }
+
   const fullPath = path.join(process.cwd(), directory, filename)
   const fileContents = fs.readFileSync(fullPath, 'utf8')
 
@@ -58,7 +99,7 @@ export async function parseMdx(directory: string, filename: string): Promise<MDX
   // Generate slug from filename (remove .mdx extension)
   const slug = filename.replace(/\.mdx$/, '')
 
-  return {
+  const result = {
     frontmatter: {
       ...data,
       slug,
@@ -66,14 +107,18 @@ export async function parseMdx(directory: string, filename: string): Promise<MDX
     content: mdxContent,
     slug,
   }
-}
+
+  // Cache the result
+  mdxContentCache.set(cacheKey, result)
+  return result
+})
 
 // Get all MDX content from a directory
-export async function getAllMdxContent(directory: string): Promise<MDXContent[]> {
+export const getAllMdxContent = cache(async (directory: string): Promise<MDXContent[]> => {
   const files = await getMdxFiles(directory)
 
   const content = await Promise.all(
-    files.map(async filename => {
+    files.map(async (filename: string) => {
       return await parseMdx(directory, filename)
     })
   )
@@ -85,16 +130,16 @@ export async function getAllMdxContent(directory: string): Promise<MDXContent[]>
     }
     return 0
   })
-}
+})
 
 // Get a specific MDX file by slug
-export async function getMdxBySlug(directory: string, slug: string): Promise<MDXContent | null> {
+export const getMdxBySlug = cache(async (directory: string, slug: string): Promise<MDXContent | null> => {
   const files = await getMdxFiles(directory)
-  const filename = files.find(file => file.replace(/\.mdx$/, '') === slug)
+  const filename = files.find((file: string) => file.replace(/\.mdx$/, '') === slug)
 
   if (!filename) {
     return null
   }
 
   return await parseMdx(directory, filename)
-}
+})
