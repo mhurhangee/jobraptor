@@ -1,10 +1,11 @@
-"use client"
+'use client'
 
-import type React from "react"
+import type React from 'react'
+import { useCallback, useEffect, useRef, useState, useTransition } from 'react'
 
-import { useState, useRef, useEffect, useTransition, useCallback } from "react"
-import { Edit3, Check, X, Loader2, AlertCircle } from "lucide-react"
-import { cn } from "@/lib/utils"
+import { cn } from '@/lib/utils'
+
+import { AlertCircle, Check, Edit3, Loader2, X } from 'lucide-react'
 
 interface EditableTextareaProps {
   value: string
@@ -23,7 +24,7 @@ interface EditableTextareaProps {
 export function EditableTextarea({
   value,
   onSave,
-  placeholder = "Click to add content...",
+  placeholder = 'Click to add content...',
   className,
   maxLength,
   minRows = 3,
@@ -35,7 +36,7 @@ export function EditableTextarea({
 }: EditableTextareaProps) {
   const [isEditing, setIsEditing] = useState(false)
   const [editValue, setEditValue] = useState(value)
-  const [saveStatus, setSaveStatus] = useState<"idle" | "saving" | "saved" | "error">("idle")
+  const [saveStatus, setSaveStatus] = useState<'idle' | 'saving' | 'saved' | 'error'>('idle')
   const [isPending, startTransition] = useTransition()
 
   const textareaRef = useRef<HTMLTextAreaElement>(null)
@@ -59,7 +60,7 @@ export function EditableTextarea({
     const textarea = textareaRef.current
     if (!textarea) return
 
-    textarea.style.height = "auto"
+    textarea.style.height = 'auto'
     const scrollHeight = textarea.scrollHeight
     const lineHeight = Number.parseInt(getComputedStyle(textarea).lineHeight)
     const minHeight = lineHeight * minRows
@@ -72,27 +73,27 @@ export function EditableTextarea({
     async (newValue: string) => {
       if (!onSave || newValue === value) return
 
-      setSaveStatus("saving")
+      setSaveStatus('saving')
 
       try {
         startTransition(async () => {
           await onSave(newValue)
-          setSaveStatus("saved")
+          setSaveStatus('saved')
 
           saveTimeoutRef.current = setTimeout(() => {
-            setSaveStatus("idle")
+            setSaveStatus('idle')
           }, 2000)
         })
       } catch (error) {
-        console.error("Save failed:", error)
-        setSaveStatus("error")
+        console.error('Save failed:', error)
+        setSaveStatus('error')
 
         saveTimeoutRef.current = setTimeout(() => {
-          setSaveStatus("idle")
+          setSaveStatus('idle')
         }, 3000)
       }
     },
-    [onSave, value],
+    [onSave, value]
   )
 
   const handleInputChange = (newValue: string) => {
@@ -127,14 +128,14 @@ export function EditableTextarea({
 
     setEditValue(value)
     setIsEditing(false)
-    setSaveStatus("idle")
+    setSaveStatus('idle')
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {
-    if (e.key === "Escape") {
+    if (e.key === 'Escape') {
       handleCancel()
     }
-    if ((e.ctrlKey || e.metaKey) && e.key === "Enter") {
+    if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
       handleSave()
     }
   }
@@ -147,45 +148,44 @@ export function EditableTextarea({
   }, [])
 
   const getSaveStatusIcon = () => {
-    if (!showSaveStatus || saveStatus === "idle") return null
+    if (!showSaveStatus || saveStatus === 'idle') return null
 
     switch (saveStatus) {
-      case "saving":
+      case 'saving':
         return <Loader2 className="h-4 w-4 animate-spin text-gray-400" />
-      case "saved":
+      case 'saved':
         return <Check className="h-4 w-4 text-green-500" />
-      case "error":
+      case 'error':
         return <AlertCircle className="h-4 w-4 text-red-500" />
       default:
         return null
     }
   }
 
-  const displayValue = value || placeholder
   const shouldTruncate = !isEditing && value && value.length > truncateLength
   const truncatedValue = shouldTruncate ? `${value.slice(0, truncateLength)}...` : value
 
   if (isEditing) {
     return (
-      <div className={cn("space-y-2", className)}>
+      <div className={cn('space-y-2', className)}>
         <div className="relative">
           <textarea
             ref={textareaRef}
             value={editValue}
-            onChange={(e) => handleInputChange(e.target.value)}
+            onChange={e => handleInputChange(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder={placeholder}
             maxLength={maxLength}
             className={cn(
-              "w-full px-3 py-2 text-sm border border-gray-300 rounded-md resize-none",
-              "focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent",
-              "transition-colors duration-200",
-              (isPending || saveStatus === "saving") && "opacity-75",
+              'w-full resize-none rounded-md border border-gray-300 px-3 py-2 text-sm',
+              'focus:border-transparent focus:ring-2 focus:ring-blue-500 focus:outline-none',
+              'transition-colors duration-200',
+              (isPending || saveStatus === 'saving') && 'opacity-75'
             )}
             style={{ minHeight: `${minRows * 1.5}rem` }}
           />
           {maxLength && (
-            <div className="absolute bottom-2 right-2 text-xs text-gray-400">
+            <div className="absolute right-2 bottom-2 text-xs text-gray-400">
               {editValue.length}/{maxLength}
             </div>
           )}
@@ -196,14 +196,14 @@ export function EditableTextarea({
             <button
               onClick={handleSave}
               disabled={isPending}
-              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-white bg-blue-600 rounded hover:bg-blue-700 disabled:opacity-50"
+              className="inline-flex items-center gap-1 rounded bg-blue-600 px-3 py-1 text-xs font-medium text-white hover:bg-blue-700 disabled:opacity-50"
             >
               <Check className="h-3 w-3" />
               Save
             </button>
             <button
               onClick={handleCancel}
-              className="inline-flex items-center gap-1 px-3 py-1 text-xs font-medium text-gray-700 bg-gray-100 rounded hover:bg-gray-200"
+              className="inline-flex items-center gap-1 rounded bg-gray-100 px-3 py-1 text-xs font-medium text-gray-700 hover:bg-gray-200"
             >
               <X className="h-3 w-3" />
               Cancel
@@ -212,7 +212,7 @@ export function EditableTextarea({
           </div>
 
           <div className="text-xs text-gray-500">
-            <kbd className="px-1 py-0.5 text-xs bg-gray-100 rounded">Ctrl+Enter</kbd> to save
+            <kbd className="rounded bg-gray-100 px-1 py-0.5 text-xs">Ctrl+Enter</kbd> to save
           </div>
         </div>
       </div>
@@ -223,17 +223,19 @@ export function EditableTextarea({
     <div
       onClick={() => setIsEditing(true)}
       className={cn(
-        "group relative cursor-pointer rounded-md border border-transparent p-3 transition-colors",
-        "hover:border-gray-200 hover:bg-gray-50",
-        !value && "text-gray-500",
-        className,
+        'group relative cursor-pointer rounded-md border border-transparent p-3 transition-colors',
+        'hover:border-gray-200 hover:bg-gray-50',
+        !value && 'text-gray-500',
+        className
       )}
     >
-      <div className="whitespace-pre-wrap text-sm leading-relaxed">{truncatedValue || placeholder}</div>
+      <div className="text-sm leading-relaxed whitespace-pre-wrap">
+        {truncatedValue || placeholder}
+      </div>
 
       {shouldTruncate && (
         <button
-          onClick={(e) => {
+          onClick={e => {
             e.stopPropagation()
             setIsEditing(true)
           }}

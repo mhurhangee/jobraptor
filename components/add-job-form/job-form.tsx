@@ -2,9 +2,8 @@
 
 import { useEffect, useState } from 'react'
 
-import { Label } from '@/components/ui/label'
 import { Input } from '@/components/ui/input'
-import { Textarea } from '@/components/ui/textarea'
+import { Label } from '@/components/ui/label'
 import {
   Select,
   SelectContent,
@@ -12,12 +11,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import { Textarea } from '@/components/ui/textarea'
 
 import type { StepProps } from '@/components/stepper/stepper-context'
 import { useStepper } from '@/components/stepper/stepper-context'
 
-import type { JobSchema, StepperData } from './schemas'
 import { STATUS_OPTIONS } from '@/lib/config/job-status'
+
+import type { JobSchema, StepperData } from './schemas'
 
 export function JobForm({ data, allData, isLoading }: StepProps) {
   const { updateData } = useStepper()
@@ -39,7 +40,7 @@ export function JobForm({ data, allData, isLoading }: StepProps) {
 
     // Preserve other fields if they exist
     postingUrl: typedData.job?.postingUrl,
-    aiMetadata: typedData.job?.aiMetadata
+    aiMetadata: typedData.job?.aiMetadata,
   })
 
   // Update stepper context whenever form data changes

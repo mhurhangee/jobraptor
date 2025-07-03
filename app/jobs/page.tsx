@@ -29,7 +29,7 @@ async function JobsTable() {
           </div>
         </div>
         <div className="neo-table">
-          <DataTable columns={columns} data={jobs || [] } />
+          <DataTable columns={columns} data={jobs || []} />
         </div>
       </>
     )

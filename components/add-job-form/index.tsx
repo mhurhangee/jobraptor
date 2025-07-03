@@ -87,7 +87,7 @@ const steps: StepConfig[] = [
 
 export function AddJobForm() {
   const handleComplete = async (data: StepperData) => {
-    console.log("Form completed with data:", data)
+    console.log('Form completed with data:', data)
     // Here you would typically send the data to your backend
   }
 
