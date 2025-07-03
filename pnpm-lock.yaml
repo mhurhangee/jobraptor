@@ -20,9 +20,6 @@ importers:
       '@clerk/themes':
         specifier: ^2.2.53
         version: 2.2.53
-      '@mdx-js/loader':
-        specifier: ^3.1.0
-        version: 3.1.0(acorn@8.15.0)
       '@mdx-js/react':
         specifier: ^3.1.0
         version: 3.1.0(@types/react@19.1.8)(react@19.1.0)
@@ -83,9 +80,6 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
-      dotenv:
-        specifier: ^17.0.1
-        version: 17.0.1
       drizzle-orm:
         specifier: ^0.44.2
         version: 0.44.2(@neondatabase/serverless@1.0.1)(@opentelemetry/api@1.9.0)(@types/pg@8.15.4)
@@ -147,6 +141,9 @@ importers:
       '@types/react-dom':
         specifier: ^19.1.6
         version: 19.1.6(@types/react@19.1.8)
+      dotenv:
+        specifier: ^17.0.1
+        version: 17.0.1
       drizzle-kit:
         specifier: ^0.31.4
         version: 0.31.4
@@ -4241,6 +4238,7 @@ snapshots:
     transitivePeerDependencies:
       - acorn
       - supports-color
+    optional: true
 
   '@mdx-js/mdx@3.1.0(acorn@8.15.0)':
     dependencies:
