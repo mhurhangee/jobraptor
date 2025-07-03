@@ -43,6 +43,13 @@
       "when": 1751461270430,
       "tag": "0005_slippery_greymalkin",
       "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1751487122905,
+      "tag": "0006_round_avengers",
+      "breakpoints": true
     }
   ]
 }

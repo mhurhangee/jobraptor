@@ -21,12 +21,12 @@ export async function getJobs() {
       .select()
       .from(jobs)
       .where(eq(jobs.userId, userId))
-      .orderBy(desc(jobs.appliedAt))
+      .orderBy(desc(jobs.createdAt))
 
     return result
   } catch (error) {
     console.error('Database error in getJobs:', error)
-    return []
+    return null
   }
 }
 
@@ -64,9 +64,6 @@ export async function updateJobField(id: string, field: string, value: string) {
       'postingUrl',
       'contact',
       'company',
-      'appliedAt',
-      'nextAction',
-      'nextActionDeadline',
     ]
     if (!allowedFields.includes(field)) {
       throw new Error(`Field ${field} is not allowed to be updated`)
@@ -75,11 +72,6 @@ export async function updateJobField(id: string, field: string, value: string) {
     const updateData = {
       [field]: value || null,
       updatedAt: new Date(),
-    }
-
-    // Handle date fields
-    if (field === 'appliedAt' || field === 'nextActionDeadline') {
-      updateData[field] = value ? new Date(value) : null
     }
 
     await db
@@ -112,9 +104,6 @@ export async function createJob(job: JobSchema) {
         status: job.status || 'Interested',
         location: job.location || '',
         postingUrl: job.postingUrl || null,
-        appliedAt: job.appliedAt ? new Date(job.appliedAt) : null,
-        nextAction: job.nextAction || null,
-        nextActionDeadline: job.nextActionDeadline ? new Date(job.nextActionDeadline) : null,
         description: job.description || null,
         salary: job.salary || null,
         contact: job.contact || null,

@@ -31,10 +31,6 @@ export type JobExtractionSchema = z.infer<typeof jobExtractionSchema>
 export const jobSchema = jobExtractionSchema.extend({
   status: z.string().describe('The status of the job, e.g. Applied, Interview, etc.').optional(),
 
-  appliedAt: z.date().optional(),
-  nextAction: z.string().optional(),
-  nextActionDeadline: z.date().optional(),
-
   notes: z.string().optional(),
 
   postingUrl: z.string().optional(),

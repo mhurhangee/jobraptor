@@ -10,10 +10,6 @@ export const jobs = pgTable('jobs', {
   location: varchar('location', { length: 128 }).notNull(),
   postingUrl: text('posting_url'),
 
-  appliedAt: timestamp('applied_at', { withTimezone: true }),
-  nextAction: varchar('next_action', { length: 255 }),
-  nextActionDeadline: timestamp('next_action_deadline', { withTimezone: true }),
-
   description: text('description'),
   salary: varchar('salary', { length: 64 }),
   contact: varchar('contact', { length: 256 }),

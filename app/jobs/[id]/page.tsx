@@ -117,34 +117,6 @@ export default function JobDetailPage({ params }: JobDetailPageProps) {
                   label="Salary"
                 />
               </div>
-              <div>
-                <EditableField
-                  jobId={job.id}
-                  fieldName="appliedAt"
-                  fieldValue={job.appliedAt ? new Date(job.appliedAt).toISOString() : null}
-                  fieldType="date"
-                  label="Applied Date"
-                />
-              </div>
-              <div>
-                <EditableField
-                  jobId={job.id}
-                  fieldName="nextAction"
-                  fieldValue={job.nextAction}
-                  label="Next Action"
-                />
-              </div>
-              <div>
-                <EditableField
-                  jobId={job.id}
-                  fieldName="nextActionDeadline"
-                  fieldValue={
-                    job.nextActionDeadline ? new Date(job.nextActionDeadline).toISOString() : null
-                  }
-                  fieldType="date"
-                  label="Next Action Deadline"
-                />
-              </div>
             </div>
 
             <div>

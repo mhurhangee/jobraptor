@@ -5,7 +5,6 @@ import { createJob } from '@/lib/actions/jobs'
 import { fetchAPI } from '@/lib/utils/fetch'
 import { validateUrl } from '@/lib/utils/validate-url'
 
-import { AdditionalInfoForm } from './additional-info-form'
 import { JobForm } from './job-form'
 import { type StepperData, jobSchema } from './schemas'
 import { SuccessStep } from './success-step'
@@ -63,23 +62,6 @@ const steps: StepConfig[] = [
       }),
     canSkip: true,
     onNext: async (stepData: StepperData) => {
-      return {
-        job: { ...stepData.job },
-      }
-    },
-  },
-  {
-    id: 'additional-info',
-    title: 'Additional Information',
-    description: 'Add application status and tracking details',
-    component: AdditionalInfoForm,
-    validation: () =>
-      Promise.resolve({
-        isValid: true, // All fields are optional in this form
-        message: '',
-      }),
-    canSkip: false,
-    onNext: async (stepData: StepperData) => {
       const job = stepData.job
 
       const jobToSave = jobSchema.parse(job)
@@ -105,7 +87,7 @@ const steps: StepConfig[] = [
 
 export function AddJobForm() {
   const handleComplete = async (data: StepperData) => {
-    console.log('Form completed with data:', data)
+    console.log("Form completed with data:", data)
     // Here you would typically send the data to your backend
   }
 

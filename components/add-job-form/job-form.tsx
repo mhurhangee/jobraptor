@@ -2,14 +2,22 @@
 
 import { useEffect, useState } from 'react'
 
-import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
+import { Input } from '@/components/ui/input'
 import { Textarea } from '@/components/ui/textarea'
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from '@/components/ui/select'
 
 import type { StepProps } from '@/components/stepper/stepper-context'
 import { useStepper } from '@/components/stepper/stepper-context'
 
 import type { JobSchema, StepperData } from './schemas'
+import { STATUS_OPTIONS } from '@/lib/config/job-status'
 
 export function JobForm({ data, allData, isLoading }: StepProps) {
   const { updateData } = useStepper()
@@ -26,16 +34,12 @@ export function JobForm({ data, allData, isLoading }: StepProps) {
     salary: typedData.job?.salary || '',
     location: typedData.job?.location || '',
     contact: typedData.job?.contact || '',
+    status: typedData.job?.status,
+    notes: typedData.job?.notes,
 
     // Preserve other fields if they exist
     postingUrl: typedData.job?.postingUrl,
-    aiMetadata: typedData.job?.aiMetadata,
-    // These fields will be handled in AdditionalInfoForm
-    status: typedData.job?.status,
-    notes: typedData.job?.notes,
-    appliedAt: typedData.job?.appliedAt,
-    nextAction: typedData.job?.nextAction,
-    nextActionDeadline: typedData.job?.nextActionDeadline,
+    aiMetadata: typedData.job?.aiMetadata
   })
 
   // Update stepper context whenever form data changes
@@ -116,6 +120,25 @@ export function JobForm({ data, allData, isLoading }: StepProps) {
             disabled={isLoading}
           />
         </div>
+        <div className="space-y-2">
+          <Label htmlFor="job-status">Application Status</Label>
+          <Select
+            value={formData.status || ''}
+            onValueChange={value => handleInputChange('status', value)}
+            disabled={isLoading}
+          >
+            <SelectTrigger id="job-status" className="w-full">
+              <SelectValue placeholder="Select status" />
+            </SelectTrigger>
+            <SelectContent>
+              {STATUS_OPTIONS.map(option => (
+                <SelectItem key={option.value} value={option.value}>
+                  {option.label}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       <div className="space-y-2">
@@ -125,6 +148,18 @@ export function JobForm({ data, allData, isLoading }: StepProps) {
           value={formData.description || ''}
           onChange={e => handleInputChange('description', e.target.value)}
           placeholder="Job description..."
+          disabled={isLoading}
+          rows={5}
+        />
+      </div>
+
+      <div className="space-y-2">
+        <Label htmlFor="job-notes">Notes</Label>
+        <Textarea
+          id="job-notes"
+          value={formData.notes || ''}
+          onChange={e => handleInputChange('notes', e.target.value)}
+          placeholder="Any additional notes about the job application..."
           disabled={isLoading}
           rows={5}
         />
