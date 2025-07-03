@@ -1,0 +1,55 @@
+{
+  "version": "7",
+  "dialect": "postgresql",
+  "entries": [
+    {
+      "idx": 0,
+      "version": "7",
+      "when": 1751366170509,
+      "tag": "0000_lovely_wonder_man",
+      "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1751372788127,
+      "tag": "0001_complete_magneto",
+      "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1751373589352,
+      "tag": "0002_stale_justice",
+      "breakpoints": true
+    },
+    {
+      "idx": 3,
+      "version": "7",
+      "when": 1751448572214,
+      "tag": "0003_nasty_adam_destine",
+      "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1751461122572,
+      "tag": "0004_warm_blindfold",
+      "breakpoints": true
+    },
+    {
+      "idx": 5,
+      "version": "7",
+      "when": 1751461270430,
+      "tag": "0005_slippery_greymalkin",
+      "breakpoints": true
+    },
+    {
+      "idx": 6,
+      "version": "7",
+      "when": 1751487122905,
+      "tag": "0006_round_avengers",
+      "breakpoints": true
+    }
+  ]
+}

@@ -1,19 +1,10 @@
-import createMDX from '@next/mdx'
+import { withContentCollections } from '@content-collections/next'
 
 import type { NextConfig } from 'next'
 
-import remarkGfm from 'remark-gfm'
-
-const withMDX = createMDX({
-  extension: /\.mdx?$/,
-  options: {
-    remarkPlugins: [remarkGfm],
-    rehypePlugins: [],
-  },
-})
-
 const nextConfig: NextConfig = {
-  pageExtensions: ['js', 'jsx', 'ts', 'tsx', 'md', 'mdx'],
+  /* config options here */
 }
 
-export default withMDX(nextConfig)
+// withContentCollections must be the outermost plugin
+export default withContentCollections(nextConfig)

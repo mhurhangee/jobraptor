@@ -14,7 +14,7 @@ import { Logo } from '@/components/logo'
 
 import { navigationItems } from '@/lib/config/navigation'
 
-import { ArrowRight, ChevronDown, ChevronRight, Menu, Plus, UserIcon, X } from 'lucide-react'
+import { ArrowRight, ChevronDown, ChevronRight, Menu, UserIcon, X } from 'lucide-react'
 
 export function Navigation() {
   const { isSignedIn } = useAuth()
@@ -96,10 +96,7 @@ export function Navigation() {
 
             <SignedIn>
               <Button asChild className="btn-neo-secondary hidden lg:block" size="sm">
-                <Link href="/job/add">
-                  <Plus strokeWidth={3} className="hidden h-4 w-4 lg:block" />
-                  Job
-                </Link>
+                <Link href="/jobs">Your Jobs</Link>
               </Button>
               <UserButton appearance={{ baseTheme: neobrutalism }} fallback={<UserIcon />} />
             </SignedIn>
